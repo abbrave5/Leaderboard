@@ -109,6 +109,7 @@ function createPlayers() {
 	table.id = 'playerTable';
 	playerDiv.appendChild(table);
 	playerTable = document.getElementById("playerTable");
+	//playerTable.style.width = '100%';
 	tr = document.createElement("tr");
 	td = document.createElement("td");
 	//create row for each player
@@ -119,7 +120,8 @@ function createPlayers() {
 		//apply css to each player row
 		tr.style.fontFamily = 'din-2014, sans-serif';
 		tr.style.fontSize = '24px';
-		tr.style.textAlign = 'left';
+		//tr.style.textAlign = 'left';
+		tr.style.border = 'solid';
 		//cloneNode(true) required for repeatedly creating the same element
 		playerTable.appendChild(tr.cloneNode(true));		
 		rowID = document.getElementById(tr.id);
@@ -130,15 +132,21 @@ function createPlayers() {
 			//set id for each column based on i (player number)
 			if (j == 0) {
 				td.id = "player" + i + "pos";
+				td.style.width = '5%';
 			} else if (j == 1) {
 				td.id = "player" + i + "name";
 				playerName = td.id;
+				td.style.width = '40%';
+				td.style.textAlign = 'left';
 			} else if (j == 2) {
 				td.id = "player" + i + "score";
+				td.style.textAlign = 'center';
 				playerScore = td.id;
+				td.style.width = '5%';
 			} else {
 				td.id = "lastHole" + i;
 				td.setAttribute('class', 'lastHole');
+				td.style.width = "5%";
 			}
 			rowID.appendChild(td.cloneNode(true));
 		}
