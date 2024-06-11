@@ -111,7 +111,7 @@ function createPlayers() {
 	table.id = 'playerTable';
 	playerDiv.appendChild(table);
 	playerTable = document.getElementById("playerTable");
-	//playerTable.style.width = '100%';
+	playerTable.style.width = '100%';
 	tr = document.createElement("tr");
 	td = document.createElement("td");
 	//create row for each player
@@ -122,8 +122,7 @@ function createPlayers() {
 		//apply css to each player row
 		tr.style.fontFamily = 'din-2014, sans-serif';
 		tr.style.fontSize = '24px';
-		//tr.style.textAlign = 'left';
-		tr.style.border = 'solid';
+		tr.style.borderStyle = 'solid';
 		//cloneNode(true) required for repeatedly creating the same element
 		playerTable.appendChild(tr.cloneNode(true));		
 		rowID = document.getElementById(tr.id);
@@ -148,7 +147,7 @@ function createPlayers() {
 			} else {
 				td.id = "lastHole" + i;
 				td.setAttribute('class', 'lastHole');
-				td.style.width = "5%";
+				td.style.width = "10%";
 			}
 			rowID.appendChild(td.cloneNode(true));
 		}
