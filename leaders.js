@@ -68,12 +68,12 @@ function startRound() {
 	document.getElementById("input").remove();
 	document.getElementById("header").innerHTML = "LEADERS";
 	document.getElementById("header").style.fontFamily = 'din-2014, sans-serif';
+	document.getElementById("header").style.margin = '0';
 	//set up html element creation for text, input field, and submit buttons
  	let playerDiv = document.getElementById('players');
  	let scoreInput = document.createElement('input');
  	let scoreUpdate = document.createElement('button');
 	createPlayers();
-	
 	//create inputs for score entry
 	label = document.createElement("label");
 	for (i = 0; i < playerNames.length; i++) {
@@ -94,6 +94,8 @@ function startRound() {
 		playerDiv.appendChild(document.createElement("br").cloneNode(true));
 		
 	}
+	//create space underneath leaderboard for input fields
+	document.getElementById('playerTable').style.marginBottom = '80px';
 	//create post button after score entry fields
 	playerDiv.appendChild(scoreUpdate);
 	playerDiv.appendChild(document.createElement("br").cloneNode(true));
@@ -209,6 +211,11 @@ function postScore() {
 			allRows[i - 1].parentNode.insertBefore(allRows[i], allRows[i - 1]);
 			//check if more switching is needed
 			switchContinue = true;
+			console.log(allRows);
+			//see which place each player is in
+			for (j = 0; j < allRows.length; j++) {
+
+			}
 		}
 	}
 	//change score display to relation to par
