@@ -152,7 +152,7 @@ function createPlayers() {
 		document.getElementById(playerName).innerHTML=playerNames[i];
 		//insert score into third column
 		document.getElementById(playerScore).innerHTML = 'E';
-		document.getElementsByClassName('')
+		document.getElementsByClassName('');
 	}
 	//start with player 1 with position 1, rest blank
 	document.getElementById('player0pos').innerHTML='1';
@@ -235,5 +235,12 @@ function postScore() {
 		document.getElementById(playerIDs[l]).innerHTML = scoreToPar;
 		//reset scoreToPar for next iteration
 		scoreToPar = 0;
+	}
+	//show total score after 18th hole
+	if (whichHole == 18) {
+		document.getElementById('postScore').remove();
+		for (let i = 0; i < scores.length; i++) {
+			document.getElementById('lastHole' + i).innerHTML = scores[i];
+		}
 	}
 }
