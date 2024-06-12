@@ -91,15 +91,13 @@ function startRound() {
 		playerDiv.appendChild(label.cloneNode(true));
 		playerDiv.appendChild(document.createElement("br").cloneNode(true));
 		playerDiv.appendChild(scoreInput.cloneNode(true));
-		playerDiv.appendChild(document.createElement("br").cloneNode(true));
-		
+		playerDiv.appendChild(document.createElement("br").cloneNode(true));	
 	}
 	//create space underneath leaderboard for input fields
 	document.getElementById('playerTable').style.marginBottom = '80px';
 	//create post button after score entry fields
 	playerDiv.appendChild(scoreUpdate);
 	playerDiv.appendChild(document.createElement("br").cloneNode(true));
-
 }
 
 function createPlayers() {
@@ -134,6 +132,7 @@ function createPlayers() {
 			if (j == 0) {
 				td.id = "player" + i + "pos";
 				td.style.width = '5%';
+				td.style.textAlign = "left";
 			} else if (j == 1) {
 				td.id = "player" + i + "name";
 				playerName = td.id;
@@ -146,8 +145,6 @@ function createPlayers() {
 				td.style.width = '5%';
 			} else {
 				td.id = "lastHole" + i;
-				td.setAttribute('class', 'lastHole');
-				td.style.width = "10%";
 			}
 			rowID.appendChild(td.cloneNode(true));
 		}
@@ -155,19 +152,10 @@ function createPlayers() {
 		document.getElementById(playerName).innerHTML=playerNames[i];
 		//insert score into third column
 		document.getElementById(playerScore).innerHTML = 'E';
+		document.getElementsByClassName('')
 	}
 	//start with player 1 with position 1, rest blank
-	//document.getElementById('player0pos').innerHTML='1';
-	//apply same class name for styling
-	//let rows = document.querySelector('tr');
-	//rows.classList.add = 'playerRow';
-	//select all elements with class playerRow
-	//let temp = document.querySelectorAll('playerRow');
-	//apply css
-	//for (j = 0; j < temp.length; j++) {
-	//	temp[i].style.color = "blue";
-	//}
-
+	document.getElementById('player0pos').innerHTML='1';
 
 }
 
@@ -210,23 +198,31 @@ function postScore() {
 			allRows[i - 1].parentNode.insertBefore(allRows[i], allRows[i - 1]);
 			//check if more switching is needed
 			switchContinue = true;
-			console.log(allRows);
-			//see which place each player is in
-			for (j = 0; j < allRows.length; j++) {
-
-			}
 		}
 	}
-	//change score display to relation to par
-	for (k = 0; k < scores.length; k++){
-		scoreToPar = scores[k] - currentPar;
-		if (scoreToPar == 0) {
-			scoreToPar = "E";
-		} else if (scoreToPar > 0) {
-			scoreToPar = "+" + scoreToPar;
-		} 
-		document.getElementById(playerIDs[k]).innerHTML = scores[k];
-		document.getElementById(playerIDs[k]).innerHTML = scoreToPar;
+	//change score display to relation to par and change position number
+	for (k = 1; k < scores.length; k++){
+		scoreToPar = scores[k - 1] - currentPar;
+		document.getElementById(playerIDs[k - 1]).innerHTML = scores[k - 1];
+		posID = allRows[k - 1].id + "pos";
+		//console.log(allRows[k].id);
+		let first = allRows[k - 1].getElementsByTagName("TD")[2];
+		let second = allRows[k].getElementsByTagName("TD")[2];
+		if (parseInt(first.innerHTML) < parseInt(second.innerHTML)) {
+			document.getElementById(posID).innerHTML = k;
+		} else if (parseInt(first.innerHTML) == parseInt(second.innerHTML)) {
+			document.getElementById(posID).innerHTML = " ";
+		}
+		//if (scoreToPar == 0) {
+		//	scoreToPar = "E";
+		//} else if (scoreToPar > 0) {
+		//	scoreToPar = "+" + scoreToPar;
+		//} 
+		
+		//document.getElementById(playerIDs[k]).innerHTML = scoreToPar;
 		scoreToPar = 0;
+		//update each player's position on the leaderboard
+		
+		
 	}
 }
