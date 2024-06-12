@@ -7,8 +7,8 @@ var nameNum = 1;
 //all players start at E
 var scores = [];
 //array for par on each hole
-var holePar = [];
-holePar.length = 18;
+var holePar = [5, 4, 4, 4, 4, 3, 4, 5, 3, 4, 5, 4, 3, 4, 5, 4, 3, 4];
+//holePar.length = 18;
 //array for hole handicap
 var holeHCP = [];
 holeHCP.length = 18;
@@ -17,9 +17,9 @@ var playerIDs = [];
 var whichHole = 0;
 //set var to calculate par
 currentPar = 0;
-for (i = 0; i < 18; i++){
-	holePar[i] = 4;
-}
+//for (i = 0; i < 18; i++){
+//	holePar[i] = 4;
+//}
 function getPlayers() {
 	//Get number of players in the round
 	let getPlayers = document.getElementById("getPlayers");
@@ -200,29 +200,40 @@ function postScore() {
 			switchContinue = true;
 		}
 	}
-	//change score display to relation to par and change position number
-	for (k = 1; k < scores.length; k++){
-		scoreToPar = scores[k - 1] - currentPar;
-		document.getElementById(playerIDs[k - 1]).innerHTML = scores[k - 1];
-		posID = allRows[k - 1].id + "pos";
-		//console.log(allRows[k].id);
-		let first = allRows[k - 1].getElementsByTagName("TD")[2];
-		let second = allRows[k].getElementsByTagName("TD")[2];
-		if (parseInt(first.innerHTML) < parseInt(second.innerHTML)) {
-			document.getElementById(posID).innerHTML = k;
-		} else if (parseInt(first.innerHTML) == parseInt(second.innerHTML)) {
-			document.getElementById(posID).innerHTML = " ";
-		}
-		//if (scoreToPar == 0) {
-		//	scoreToPar = "E";
-		//} else if (scoreToPar > 0) {
-		//	scoreToPar = "+" + scoreToPar;
-		//} 
+
+	//change player position
+	for (k = 0; k < scores.length; k++){
 		
-		//document.getElementById(playerIDs[k]).innerHTML = scoreToPar;
-		scoreToPar = 0;
+		//put numerical score in html to use to determine position on leaderboard
+		document.getElementById(playerIDs[k]).innerHTML = scores[k];
+		
 		//update each player's position on the leaderboard
-		
-		
+		posID = allRows[k].id + "pos";
+		if (k == 0) {
+			document.getElementById(posID).innerHTML = "1";
+		} else {
+			let first = allRows[k - 1].getElementsByTagName("TD")[2];
+			let second = allRows[k].getElementsByTagName("TD")[2];
+			if (parseInt(second.innerHTML) == parseInt(first.innerHTML)) {
+				document.getElementById(posID).innerHTML = " ";
+			} else {
+				document.getElementById(posID).innerHTML = k + 1;
+			}
+		}
+
+	}
+	//change html to reflect score in relation to par
+	for (l = 0; l < scores.length; l++){
+		scoreToPar = scores[l] - currentPar;
+		//convert numerical score to relation to par
+		if (scoreToPar == 0) {
+			scoreToPar = "E";
+		} else if (scoreToPar > 0) {
+			scoreToPar = "+" + scoreToPar;
+		}
+		document.getElementById(playerIDs[l]).innerHTML = scores[l];
+		document.getElementById(playerIDs[l]).innerHTML = scoreToPar;
+		//reset scoreToPar for next iteration
+		scoreToPar = 0;
 	}
 }
