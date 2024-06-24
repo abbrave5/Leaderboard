@@ -7,7 +7,7 @@ var nameNum = 1;
 //all players start at E
 var scores = [];
 //array for par on each hole
-var holePar = [5, 4, 4, 4, 4, 3, 4, 5, 3, 4, 5, 4, 3, 4, 5, 4, 3, 4];
+var holePar = [3, 3, 3, 3, 3, 3, 3, 3, 3];
 //holePar.length = 18;
 //array for hole handicap
 var holeHCP = [];
@@ -39,13 +39,18 @@ function getPlayers() {
 }
 
 function getNames() {
-	nameNum++;
 	let getPlayers = document.getElementById("getPlayers");
 	//capture input and store to numPlayers
 	let numPlayers = getPlayers.value;
+	//make sure field isn't blank
+	if (numPlayers == "") {
+		alert("Please enter name");
+		return false;
+	}
 	//change name to upper case
 	numPlayers = numPlayers.toUpperCase();
-	if (index < playerNames.length) {
+	if (index < playerNames.length && numPlayers != "") {
+		nameNum++;
 		//change input text
 		document.getElementById("inputText").innerHTML = "Player " + nameNum +  " Name:";
 		//store input into array
@@ -86,7 +91,7 @@ function startRound() {
 		playerIDs[i] = scoreInput.id;	
 		scoreInput.innerHTML = scoreInput.id;
 		scoreUpdate.id = 'postScore';
-		scoreUpdate.setAttribute('onclick', 'postScore()');
+		scoreUpdate.setAttribute('onclick', 'checkEmpty()');
 		scoreUpdate.innerHTML = "Post";
 		playerDiv.appendChild(label.cloneNode(true));
 		playerDiv.appendChild(document.createElement("br").cloneNode(true));
@@ -114,7 +119,7 @@ function createPlayers() {
 	td = document.createElement("td");
 	//create row for each player
 	for (let i = 0; i < playerNames.length; i++){
-		//set id for each row
+		//set id for each row, number only to find total score easier at the end
 		tr.id = 'player' + i;
 		//tr.className = "playerRow";
 		//apply css to each player row
@@ -159,6 +164,22 @@ function createPlayers() {
 
 }
 
+function checkEmpty() {
+	//see if there are any blank scores
+	let isBlank = false;
+	scoreData = document.getElementsByClassName('scoreData');
+	for (i = 0; i < scores.length; i++) {
+		if (scoreData[i].value == "") {
+			alert("Please enter a score:");
+			isBlank = true;
+			return;
+		}
+	}
+	if (isBlank === false) {
+		postScore();
+	}
+}
+
 function postScore() {
 	whichHole++;
 	currentPar = currentPar + holePar[whichHole - 1];
@@ -171,7 +192,7 @@ function postScore() {
 		changeScore = parseInt(scoreData[i].value);
 		scores[i] = scores[i] + changeScore;
 		//clear input fields
-		scoreData[i].value = '';
+		scoreData[i].value = '';		
 		document.getElementById(playerIDs[i]).innerHTML = scores[i];
 		document.getElementById('lastHole' + i).innerHTML = whichHole;
 	}
@@ -203,10 +224,8 @@ function postScore() {
 
 	//change player position
 	for (k = 0; k < scores.length; k++){
-		
 		//put numerical score in html to use to determine position on leaderboard
 		document.getElementById(playerIDs[k]).innerHTML = scores[k];
-		
 		//update each player's position on the leaderboard
 		posID = allRows[k].id + "pos";
 		if (k == 0) {
@@ -220,7 +239,6 @@ function postScore() {
 				document.getElementById(posID).innerHTML = k + 1;
 			}
 		}
-
 	}
 	//change html to reflect score in relation to par
 	for (l = 0; l < scores.length; l++){
@@ -236,11 +254,20 @@ function postScore() {
 		//reset scoreToPar for next iteration
 		scoreToPar = 0;
 	}
-	//show total score after 18th hole
-	if (whichHole == 18) {
+	//show total score after last hole
+	if (whichHole == holePar.length) {
+		//remove post score button
 		document.getElementById('postScore').remove();
+		let table = document.getElementById('playerTable');
+		//store order of players in array
+		let playerOrder = table.rows;
 		for (let i = 0; i < scores.length; i++) {
-			document.getElementById('lastHole' + i).innerHTML = scores[i];
+			scoreIndex = playerOrder[i].id;
+			scoreIndex.toString();
+			//get rid of 'player' in id so it's just a number
+			scoreIndex = scoreIndex.slice(6, 7);
+			//replace last hole completed with total score
+			document.getElementById('lastHole' + scoreIndex).innerHTML = scores[scoreIndex];
 		}
 	}
 }
