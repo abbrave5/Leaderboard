@@ -7,7 +7,7 @@ var nameNum = 1;
 //all players start at E
 var scores = [];
 //array for par on each hole
-var holePar = [3, 3, 3, 3, 3, 3, 3, 3, 3];
+var holePar = [3, 3];
 //holePar.length = 18;
 //array for hole handicap
 var holeHCP = [];
@@ -265,7 +265,8 @@ function postScore() {
 			scoreIndex = playerOrder[i].id;
 			scoreIndex.toString();
 			//get rid of 'player' in id so it's just a number
-			scoreIndex = scoreIndex.slice(6, 7);
+			scoreIndex = scoreIndex.slice(6);
+			console.log(scoreIndex);
 			//replace last hole completed with total score
 			document.getElementById('lastHole' + scoreIndex).innerHTML = scores[scoreIndex];
 		}
