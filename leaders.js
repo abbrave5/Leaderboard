@@ -7,7 +7,7 @@ var nameNum = 1;
 //all players start at E
 var scores = [];
 //array for par on each hole
-var holePar = [4, 5, 4, 4, 3, 5, 4, 3, 4];
+var holePar = [4, 4, 3, 5, 3, 4, 4, 3, 4, 4, 3, 5, 4, 5, 3, 4, 3, 5];
 //holePar.length = 18;
 //array for hole handicap
 var holeHCP = [];
